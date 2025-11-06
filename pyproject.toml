@@ -22,3 +22,6 @@ dev = [
 
 [project.urls]
 Homepage = "https://example.com/dlnk-monitoring"
+
+[tool.setuptools.packages.find]
+include = ["app*", "core*", "infrastructure*"]

@@ -113,7 +113,6 @@ class MetricsRegistry:
         documentation: str,
         *,
         labelnames: Optional[Iterable[str]] = None,
-        objectives: Optional[Dict[float, float]] = None,
     ) -> Summary:
         with self._lock:
             if name in self._metrics:
@@ -126,7 +125,6 @@ class MetricsRegistry:
                 documentation,
                 labelnames=tuple(labelnames) if labelnames else (),
                 registry=self._registry,
-                objectives=objectives,
             )
             self._metrics[name] = summary
             return summary

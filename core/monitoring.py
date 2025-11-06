@@ -207,7 +207,6 @@ class MonitoringCore:
             "request_duration_seconds",
             "Request handling duration",
             labelnames=("endpoint",),
-            objectives={0.5: 0.05, 0.95: 0.01, 0.99: 0.001},
         )
         self._performance_histogram = self._metrics.register_histogram(
             "monitored_function_seconds",
