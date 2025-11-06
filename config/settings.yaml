@@ -21,3 +21,12 @@ postgresql:
 logging:
   level: INFO
   structured: true
+
+secrets:
+  vc_api_key: null
+
+openai:
+  api_base: https://api.openai.com/v1
+  default_model: gpt-4.1-mini
+  planning_model: gpt-4.1
+  workspace_dir: ./auto_build_workspace
