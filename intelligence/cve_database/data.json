@@ -1,0 +1,9 @@
+{
+  "wordpress": [
+    {
+      "cve_id": "CVE-2024-0001",
+      "description": "Sample WordPress vulnerability",
+      "severity": "high"
+    }
+  ]
+}

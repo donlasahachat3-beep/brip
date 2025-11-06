@@ -110,3 +110,58 @@ This monitoring system provides comprehensive visibility into the operation of t
 the attack system ensures that all activity is logged and audited, with detailed attack logs and metrics
 
 as requested for your security analysis
+
+## Getting Started
+
+### 1. Install dependencies
+
+```bash
+pip install -e .
+```
+
+Alternatively, install the runtime requirements manually:
+
+```bash
+pip install fastapi uvicorn[standard] psutil redis prometheus_client
+```
+
+### 2. Run the monitoring API
+
+```bash
+uvicorn app.monitoring_api.main:app --host 0.0.0.0 --port 8000
+```
+
+Logs are written in JSON format under the `logs/` directory. Set `DLNK_MONITORING_LOG_DIR` to customize the target path.
+
+## Configuration
+
+| Environment Variable       | Description                                                   | Default |
+| -------------------------- | ------------------------------------------------------------- | ------- |
+| `DLNK_MONITORING_LOG_DIR`  | Directory for structured log output                           | `logs/` |
+| `MONITORING_REDIS_URL`     | Redis connection URL for agent status tracking                | unset   |
+| `PORT`                     | Uvicorn listening port when using `app.monitoring_api.main.run` | `8000`  |
+
+## Available Endpoints
+
+- `GET /health` – Combined system metrics and component health summaries
+- `GET /system` – Raw system resource metrics (CPU, memory, disk, network)
+- `GET /status` – Application uptime, aggregated counters, overall health flag
+- `GET /metrics` – Prometheus-compatible exposition of collected metrics
+- `GET /agents` – Status of running agents sourced from Redis (when configured)
+- `GET /logs/{component}` – Retrieve JSON log lines per component (`structured`, `audit`, `security`, `performance`)
+- `POST /attacks/{attack_type}/record` – Record attack outcomes for analytics
+- `POST /trigger-self-healing` – Emit a self-healing event into the audit log
+
+## Module Overview
+
+- `agents/base/base_agent.py` – Abstract lifecycle for all worker agents
+- `core/agent_manager/` – FastAPI-based agent registry backed by Redis
+- `core/orchestrator/` – Celery configuration and task dispatch scaffolding
+- `core/communication/pubsub.py` – Redis pub/sub utility for intra-system messaging
+- `services/target_manager/` – Async SQLAlchemy models and API router for targets
+- `services/auto_detection/` – Initial service stubs for technology detection
+- `intelligence/knowledge_base/` – YAML-backed knowledge base repository
+- `intelligence/cve_database/` – JSON-backed CVE lookup repository
+- `infrastructure/monitoring/*` – Structured logging and Prometheus metrics utilities
+- `core/monitoring.py` – System/application metric aggregation and health checks
+- `app/monitoring_api/main.py` – FastAPI application exposing monitoring endpoints

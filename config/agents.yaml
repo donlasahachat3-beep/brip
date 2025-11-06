@@ -1,0 +1,26 @@
+# Agent specific configuration profiles
+
+agents:
+  recon:
+    concurrency: 2
+    capabilities:
+      - discovery
+      - fingerprinting
+
+  scanner:
+    concurrency: 4
+    capabilities:
+      - vulnerability_scanning
+      - service_enumeration
+
+  exploit:
+    concurrency: 1
+    capabilities:
+      - exploit_execution
+      - payload_deployment
+
+  monitoring:
+    concurrency: 1
+    capabilities:
+      - heartbeat
+      - anomaly_detection

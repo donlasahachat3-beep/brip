@@ -1,0 +1,9 @@
+# Sample knowledge base entries
+
+wordpress:
+  - "Check for XML-RPC vulnerabilities"
+  - "Enumerate plugins via wp-json"
+
+django:
+  - "Inspect /admin login"
+  - "Review default error pages for stack traces"

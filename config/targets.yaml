@@ -1,0 +1,22 @@
+# Default target inventory
+
+targets:
+  - id: target-001
+    name: Example Web Application
+    url: https://example.com
+    tags:
+      - web
+      - production
+    credentials: null
+    notes: Initial seed target for reconnaissance drills.
+
+  - id: target-002
+    name: Internal API Gateway
+    url: https://api.internal.example.com
+    tags:
+      - api
+      - internal
+    credentials:
+      username: service
+      password: changeme
+    notes: Requires VPN access; monitor for rate limiting.
