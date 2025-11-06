@@ -119,6 +119,34 @@ def get_agent_store() -> AgentStatusStore:
     return _agent_store()
 
 
+@app.get("/")
+async def root_endpoint() -> Dict[str, Any]:
+    return {
+        "service": app.title,
+        "version": app.version,
+        "documentation": {
+            "openapi": "/openapi.json",
+            "swagger_ui": "/docs",
+            "redoc": "/redoc",
+        },
+        "available_endpoints": [
+            "/health",
+            "/system",
+            "/status",
+            "/metrics",
+            "/agents",
+            "/logs/{component}",
+            "/trigger-self-healing",
+            "/attacks/{attack_type}/record",
+        ],
+    }
+
+
+@app.get("/favicon.ico")
+async def favicon_endpoint() -> Response:
+    return Response(status_code=204)
+
+
 @app.get("/health")
 async def health_endpoint(monitoring: MonitoringCore = Depends(get_monitoring_core)) -> Dict[str, Any]:
     checks = monitoring.health_checks()
