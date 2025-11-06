@@ -154,7 +154,14 @@ Logs are written in JSON format under the `logs/` directory. Set `DLNK_MONITORIN
 
 ## Module Overview
 
-- `infrastructure/monitoring/structured_logger.py` – JSON logging with contextual metadata and log rotation
-- `infrastructure/monitoring/metrics.py` – Thread-safe Prometheus metric registry helpers
+- `agents/base/base_agent.py` – Abstract lifecycle for all worker agents
+- `core/agent_manager/` – FastAPI-based agent registry backed by Redis
+- `core/orchestrator/` – Celery configuration and task dispatch scaffolding
+- `core/communication/pubsub.py` – Redis pub/sub utility for intra-system messaging
+- `services/target_manager/` – Async SQLAlchemy models and API router for targets
+- `services/auto_detection/` – Initial service stubs for technology detection
+- `intelligence/knowledge_base/` – YAML-backed knowledge base repository
+- `intelligence/cve_database/` – JSON-backed CVE lookup repository
+- `infrastructure/monitoring/*` – Structured logging and Prometheus metrics utilities
 - `core/monitoring.py` – System/application metric aggregation and health checks
 - `app/monitoring_api/main.py` – FastAPI application exposing monitoring endpoints
