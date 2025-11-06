@@ -160,8 +160,47 @@ Logs are written in JSON format under the `logs/` directory. Set `DLNK_MONITORIN
 - `core/communication/pubsub.py` – Redis pub/sub utility for intra-system messaging
 - `services/target_manager/` – Async SQLAlchemy models and API router for targets
 - `services/auto_detection/` – Initial service stubs for technology detection
+- `services/openai_service.py` – OpenAI-powered multi-agent auto-build framework
 - `intelligence/knowledge_base/` – YAML-backed knowledge base repository
 - `intelligence/cve_database/` – JSON-backed CVE lookup repository
 - `infrastructure/monitoring/*` – Structured logging and Prometheus metrics utilities
 - `core/monitoring.py` – System/application metric aggregation and health checks
 - `app/monitoring_api/main.py` – FastAPI application exposing monitoring endpoints
+
+## AI Auto-Build Framework
+
+The platform now includes a self-generating, multi-agent orchestration layer for
+autonomous development workflows. The `OpenAIService` wrapper handles
+authentication, retry logic, and workspace management for OpenAI's API. On top
+of that, the `MultiAgentOrchestrator` coordinates planner, architect,
+implementer, and reviewer personas that can iteratively expand the system.
+
+### Configuration
+
+Update `config/settings.yaml` or environment variables with your OpenAI key:
+
+```yaml
+secrets:
+  vc_api_key: sk-...
+
+openai:
+  api_base: https://api.openai.com/v1
+  default_model: gpt-4.1-mini
+  planning_model: gpt-4.1
+  workspace_dir: ./auto_build_workspace
+```
+
+### Quickstart
+
+```python
+from services.openai_service import build_default_orchestrator
+
+orchestrator = build_default_orchestrator()
+plan = orchestrator.generate_plan("Add a new monitoring dashboard module")
+report = orchestrator.run(plan)
+print(report.final_summary)
+```
+
+You can register additional agent profiles or custom handlers to extend the
+auto-build pipeline with specialised tooling (e.g., Git automation, test
+execution, deployment steps).

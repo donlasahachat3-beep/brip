@@ -20,6 +20,7 @@ dependencies = [
     "alembic>=1.13",
     "httpx>=0.27",
     "beautifulsoup4>=4.12",
+    "openai>=1.40",
 ]
 
 [project.optional-dependencies]
